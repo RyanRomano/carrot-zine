@@ -19,7 +19,6 @@ function addPage(page, book) {
 		// Load the page
 		loadPage(page, element);
 	}
-
 }
 
 function loadPage(page, pageElement) {
