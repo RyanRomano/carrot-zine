@@ -48,9 +48,6 @@ function loadPage(page, pageElement) {
 	// Load the page
 
 	img.attr('src', 'pages/' +  page + '.jpg');
-
-	loadRegions(page, pageElement);
-
 }
 
 // Zoom in / Zoom out
@@ -70,43 +67,6 @@ function zoomTo(event) {
 		}, 1);
 
 }
-
-
-
-// Load regions
-
-function loadRegions(page, element) {
-
-	$.getJSON('pages/'+page+'-regions.json').
-		done(function(data) {
-
-			$.each(data, function(key, region) {
-				addRegion(region, element);
-			});
-		});
-}
-
-// Add region
-
-function addRegion(region, pageElement) {
-	
-	var reg = $('<div />', {'class': 'region  ' + region['class']}),
-		options = $('.magazine').turn('options'),
-		pageWidth = options.width/2,
-		pageHeight = options.height;
-
-	reg.css({
-		top: Math.round(region.y/pageHeight*100)+'%',
-		left: Math.round(region.x/pageWidth*100)+'%',
-		width: Math.round(region.width/pageWidth*100)+'%',
-		height: Math.round(region.height/pageHeight*100)+'%'
-	}).attr('region-data', $.param(region.data||''));
-
-
-	reg.appendTo(pageElement);
-}
-
-// Process click on a region
 
 function regionClick(event) {
 
@@ -295,44 +255,6 @@ function moveBar(yes) {
 	if (Modernizr && Modernizr.csstransforms) {
 		$('#slider .ui-slider-handle').css({zIndex: yes ? -1 : 10000});
 	}
-}
-
-function setPreview(view) {
-
-	var previewWidth = 112,
-		previewHeight = 73,
-		previewSrc = 'pages/preview.jpg',
-		preview = $(_thumbPreview.children(':first')),
-		numPages = (view==1 || view==$('#slider').slider('option', 'max')) ? 1 : 2,
-		width = (numPages==1) ? previewWidth/2 : previewWidth;
-
-	_thumbPreview.
-		addClass('no-transition').
-		css({width: width + 15,
-			height: previewHeight + 15,
-			top: -previewHeight - 30,
-			left: ($($('#slider').children(':first')).width() - width - 15)/2
-		});
-
-	preview.css({
-		width: width,
-		height: previewHeight
-	});
-
-	if (preview.css('background-image')==='' ||
-		preview.css('background-image')=='none') {
-
-		preview.css({backgroundImage: 'url(' + previewSrc + ')'});
-
-		setTimeout(function(){
-			_thumbPreview.removeClass('no-transition');
-		}, 0);
-
-	}
-
-	preview.css({backgroundPosition:
-		'0px -'+((view-1)*previewHeight)+'px'
-	});
 }
 
 // Width of the flipbook when zoomed in
