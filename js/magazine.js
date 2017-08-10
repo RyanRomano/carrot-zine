@@ -261,7 +261,7 @@ function moveBar(yes) {
 
 function largeMagazineWidth() {
 	
-	return 1750;
+	return 2500;
 
 }
 
