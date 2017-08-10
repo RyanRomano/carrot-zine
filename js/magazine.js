@@ -260,9 +260,7 @@ function moveBar(yes) {
 // Width of the flipbook when zoomed in
 
 function largeMagazineWidth() {
-	
-	return 2000;
-
+	return 2500;
 }
 
 // decode URL Parameters
